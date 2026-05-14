@@ -1,0 +1,35 @@
+<div class="report-container">
+  <div class="report-header">
+    <h1>Mitarbeiterentnahme</h1>
+    <div class="report-meta">
+      <p><strong>Mitarbeiter:</strong> {{ data.employeeName }}</p>
+      <p><strong>Datum:</strong> {{ currentDate | date:'dd.MM.yyyy' }}</p>
+    </div>
+  </div>
+
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>Artikelnummer</th>
+        <th>Bezeichnung</th>
+        <th>Menge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data.items">
+        <td>{{ item.articleNumber }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="report-footer">
+    <div class="signature-section">
+      <div class="signature-line">
+        <p>_________________________________</p>
+        <p>Unterschrift Mitarbeiter</p>
+      </div>
+    </div>
+  </div>
+</div>

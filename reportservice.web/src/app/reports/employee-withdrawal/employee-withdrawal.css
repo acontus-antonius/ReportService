@@ -1,0 +1,85 @@
+.report-container {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  background: white;
+}
+
+.report-header {
+  margin-bottom: 30px;
+  border-bottom: 2px solid #333;
+  padding-bottom: 20px;
+}
+
+.report-header h1 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.report-meta {
+  display: flex;
+  gap: 30px;
+}
+
+.report-meta p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 40px;
+}
+
+.items-table thead {
+  background-color: #f5f5f5;
+}
+
+.items-table th,
+.items-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.items-table th {
+  font-weight: bold;
+  color: #333;
+}
+
+.items-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.report-footer {
+  margin-top: 60px;
+}
+
+.signature-section {
+  display: flex;
+  justify-content: space-around;
+}
+
+.signature-line {
+  text-align: center;
+}
+
+.signature-line p {
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.signature-line p:first-child {
+  margin-bottom: 0;
+  color: #666;
+}
+
+/* Print-spezifische Styles */
+@media print {
+  .report-container {
+    padding: 0;
+  }
+}

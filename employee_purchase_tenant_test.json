@@ -1,0 +1,49 @@
+{
+  "tenantId": "hemme",
+  "employeeName": "Anette Koßmann",
+  "employeeNumber": "57",
+  "date": "08.05.2026",
+  "items": [
+    {
+      "deliveryDate": "01.05.26",
+      "articleNumber": "10001",
+      "name": "H-Milch 3,8% 1L",
+      "quantity": 2,
+      "grossPrice": 1.49,
+      "totalGross": 2.98
+    },
+    {
+      "deliveryDate": "01.05.26",
+      "articleNumber": "10002",
+      "name": "Butter 250g",
+      "quantity": 1,
+      "grossPrice": 2.99,
+      "totalGross": 2.99
+    },
+    {
+      "deliveryDate": "02.05.26",
+      "articleNumber": "10003",
+      "name": "Joghurt natur 500g",
+      "quantity": 3,
+      "grossPrice": 0.89,
+      "totalGross": 2.67
+    },
+    {
+      "deliveryDate": "03.05.26",
+      "articleNumber": "10004",
+      "name": "Käse Gouda 200g",
+      "quantity": 2,
+      "grossPrice": 1.79,
+      "totalGross": 3.58
+    },
+    {
+      "deliveryDate": "03.05.26",
+      "articleNumber": "10005",
+      "name": "Frischmilch 1L",
+      "quantity": 1.5,
+      "grossPrice": 1.29,
+      "totalGross": 1.94
+    }
+  ],
+  "totalGross": 14.16
+}

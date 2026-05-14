@@ -1,0 +1,17 @@
+{
+  "tenantId": "hemme",
+  "employeeName": "Anette Koßmann",
+  "employeeNumber": "57",
+  "dateRange": "01.05.2026 - 05.05.2026",
+  "items": [
+    {
+      "deliveryDate": "01.05.26",
+      "articleNumber": "10001",
+      "name": "H-Milch 3,8% 1L",
+      "quantity": 2,
+      "grossPrice": 1.49,
+      "totalGross": 2.98
+    }
+  ],
+  "totalGross": 2.98
+}

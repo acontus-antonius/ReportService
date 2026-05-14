@@ -1,0 +1,88 @@
+{
+  "employeeName": "Anette Koßmann",
+  "employeeNumber": "57",
+  "date": "02.04.2026",
+  "items": [
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "64013",
+      "name": "Joghurt Pfirsich-Maracuja 400 gr",
+      "quantity": 1.000,
+      "grossPrice": 0.894,
+      "totalGross": 0.894
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60074",
+      "name": "Joghurt Kirsche 200 g",
+      "quantity": 2.000,
+      "grossPrice": 0.474,
+      "totalGross": 0.948
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60077",
+      "name": "Joghurt Stracciatella 200 g Einweg",
+      "quantity": 1.000,
+      "grossPrice": 0.474,
+      "totalGross": 0.474
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60065",
+      "name": "Joghurt der Saison 200g",
+      "quantity": 2.000,
+      "grossPrice": 0.474,
+      "totalGross": 0.948
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60060",
+      "name": "Joghurt Bircher Müsli 200g",
+      "quantity": 2.000,
+      "grossPrice": 0.474,
+      "totalGross": 0.948
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60075",
+      "name": "Joghurt Erdbeere 200 g Einweg",
+      "quantity": 2.000,
+      "grossPrice": 0.474,
+      "totalGross": 0.948
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60076",
+      "name": "Joghurt Mango-Vanille 200g Einweg",
+      "quantity": 2.000,
+      "grossPrice": 0.474,
+      "totalGross": 0.948
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60050",
+      "name": "Joghurt Heidelbeere 200 g",
+      "quantity": 2.000,
+      "grossPrice": 0.474,
+      "totalGross": 0.948
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "67055",
+      "name": "Eiskaffee Schlauchbeutel 600 ml",
+      "quantity": 8.000,
+      "grossPrice": 0.894,
+      "totalGross": 7.152
+    },
+    {
+      "deliveryDate": "02.04.26",
+      "articleNumber": "60010",
+      "name": "pasteur. 1-l-Schlauchbeutel 3,7 % Fett (VLOG)",
+      "quantity": 2.000,
+      "grossPrice": 0.894,
+      "totalGross": 1.788
+    }
+  ],
+  "totalGross": 15.996
+}

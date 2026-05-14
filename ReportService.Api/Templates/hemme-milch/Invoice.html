@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechnung {{ InvoiceNumber }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #333;
+            padding: 20mm;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #2c5f2d;
+            padding-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 24pt;
+            font-weight: bold;
+            color: #2c5f2d;
+        }
+
+        .company-info {
+            text-align: right;
+            font-size: 10pt;
+            color: #666;
+        }
+
+        .invoice-title {
+            font-size: 20pt;
+            color: #2c5f2d;
+            margin-bottom: 30px;
+        }
+
+        .invoice-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .customer-info, .invoice-details {
+            width: 48%;
+        }
+
+        .section-title {
+            font-weight: bold;
+            color: #2c5f2d;
+            margin-bottom: 10px;
+            font-size: 11pt;
+        }
+
+        .invoice-details p {
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+
+        thead {
+            background-color: #2c5f2d;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            font-weight: bold;
+            font-size: 11pt;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .totals {
+            margin-left: auto;
+            width: 300px;
+            margin-top: 20px;
+        }
+
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .totals-row.subtotal {
+            font-weight: normal;
+        }
+
+        .totals-row.tax {
+            font-weight: normal;
+        }
+
+        .totals-row.total {
+            font-weight: bold;
+            font-size: 14pt;
+            color: #2c5f2d;
+            border-top: 2px solid #2c5f2d;
+            border-bottom: 2px solid #2c5f2d;
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 9pt;
+            color: #666;
+            text-align: center;
+        }
+
+        .payment-info {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-left: 4px solid #2c5f2d;
+        }
+
+        .payment-info h3 {
+            color: #2c5f2d;
+            margin-bottom: 10px;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            Hemme Milch
+        </div>
+        <div class="company-info">
+            <strong>Hemme Milch GmbH</strong><br>
+            Musterstraße 123<br>
+            12345 Molkerei Stadt<br>
+            Tel: 01234 / 56789<br>
+            info@hemme-milch.de
+        </div>
+    </div>
+
+    <h1 class="invoice-title">Rechnung</h1>
+
+    <div class="invoice-meta">
+        <div class="customer-info">
+            <div class="section-title">Rechnungsempfänger</div>
+            <strong>{{ CustomerName }}</strong><br>
+            {{ if CustomerAddress }}
+            {{ CustomerAddress }}<br>
+            {{ end }}
+            {{ if CustomerCity }}
+            {{ CustomerZip }} {{ CustomerCity }}<br>
+            {{ end }}
+        </div>
+
+        <div class="invoice-details">
+            <div class="section-title">Rechnungsdetails</div>
+            <p><strong>Rechnungsnummer:</strong> {{ InvoiceNumber }}</p>
+            <p><strong>Rechnungsdatum:</strong> {{ Date }}</p>
+            {{ if DeliveryDate }}
+            <p><strong>Lieferdatum:</strong> {{ DeliveryDate }}</p>
+            {{ end }}
+            {{ if CustomerNumber }}
+            <p><strong>Kundennummer:</strong> {{ CustomerNumber }}</p>
+            {{ end }}
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Pos.</th>
+                <th>Artikelbezeichnung</th>
+                <th class="text-center">Menge</th>
+                <th class="text-right">Einzelpreis</th>
+                <th class="text-right">Gesamtpreis</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ for item in Items }}
+            <tr>
+                <td>{{ for.index + 1 }}</td>
+                <td>{{ item.Description }}</td>
+                <td class="text-center">{{ item.Quantity }} {{ item.Unit ?? 'Stk.' }}</td>
+                <td class="text-right">{{ item.Price | math.format '0.00' }} €</td>
+                <td class="text-right">{{ item.Total | math.format '0.00' }} €</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+
+    <div class="totals">
+        <div class="totals-row subtotal">
+            <span>Zwischensumme:</span>
+            <span>{{ Subtotal | math.format '0.00' }} €</span>
+        </div>
+        {{ if TaxRate }}
+        <div class="totals-row tax">
+            <span>MwSt. ({{ TaxRate }}%):</span>
+            <span>{{ TaxAmount | math.format '0.00' }} €</span>
+        </div>
+        {{ end }}
+        <div class="totals-row total">
+            <span>Gesamtbetrag:</span>
+            <span>{{ Total | math.format '0.00' }} €</span>
+        </div>
+    </div>
+
+    {{ if PaymentTerms }}
+    <div class="payment-info">
+        <h3>Zahlungsinformationen</h3>
+        <p>{{ PaymentTerms }}</p>
+        {{ if BankAccount }}
+        <p style="margin-top: 10px;">
+            <strong>Bankverbindung:</strong><br>
+            {{ BankAccount }}
+        </p>
+        {{ end }}
+    </div>
+    {{ end }}
+
+    <div class="footer">
+        <p>Hemme Milch GmbH • Geschäftsführer: Max Mustermann • Amtsgericht: Musterstadt HRB 12345</p>
+        <p>USt-IdNr.: DE123456789 • Steuernummer: 12/345/67890</p>
+    </div>
+</body>
+</html>
