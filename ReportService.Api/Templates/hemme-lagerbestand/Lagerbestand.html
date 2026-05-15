@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagerbestand - Hemme Milch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm 15mm 50mm 15mm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 9pt;
+            line-height: 1.3;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #0066B2;
+            padding-bottom: 10px;
+        }
+
+        .logo-container {
+            width: 120px;
+        }
+
+        .logo {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .report-info {
+            text-align: right;
+        }
+
+        .report-title {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #0066B2;
+            margin-bottom: 3px;
+        }
+
+        .report-date {
+            font-size: 8pt;
+            color: #666;
+        }
+
+        .report-details {
+            background-color: #f5f5f5;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #0066B2;
+            font-size: 8pt;
+        }
+
+        .report-details p {
+            margin: 2px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 8pt;
+        }
+
+        thead {
+            background-color: #0066B2;
+            color: white;
+        }
+
+        th {
+            padding: 6px 4px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+
+        td {
+            padding: 4px 4px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .warning-row {
+            background-color: #fff3cd !important;
+            border-left: 3px solid #ff9800;
+        }
+
+        .warning-indicator {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .charge-table {
+            margin-left: 15px;
+            margin-right: 5px;
+            margin-top: 3px;
+            margin-bottom: 5px;
+            font-size: 7pt;
+            background-color: #fafafa;
+            border: 1px solid #cce5ff;
+            table-layout: fixed;
+            width: calc(100% - 20px);
+        }
+
+        .charge-table th {
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 7pt;
+            padding: 3px 3px;
+            border-bottom: 2px solid #cce5ff;
+            font-weight: normal;
+        }
+
+        .charge-table td {
+            padding: 2px 3px;
+            font-size: 7pt;
+            background-color: white;
+        }
+
+
+
+        @media print {
+            thead {
+                display: table-header-group;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            {{ if logo_base64 }}
+            <img src="data:image/png;base64,{{ logo_base64 }}" alt="Hemme Milch Logo" class="logo">
+            {{ else }}
+            <div style="background-color: #0066B2; color: white; padding: 20px; text-align: center; font-size: 14pt; font-weight: bold;">HEMME MILCH</div>
+            {{ end }}
+        </div>
+        <div class="report-info">
+            <div class="report-title">Lagerbestand</div>
+            <div class="report-date">
+                Buchungsdatum: {{ Buchungsdatum | date.to_string "%d.%m.%Y" }}
+            </div>
+        </div>
+    </div>
+
+    <div class="report-details">
+        <p><strong>Lager:</strong> {{ LagerBezeichnung }}</p>
+        <p><strong>Lagerart:</strong> {{ if Lagerart == 2 }}Materiallager{{ else }}Warenlager{{ end }}</p>
+        <p><strong>Filter:</strong> {{ if Lagerstatus == 0 }}Alle{{ else if Lagerstatus == 1 }}Lagerbestand OK{{ else if Lagerstatus == 2 }}Nicht ausreichend{{ else }}Unbekannt{{ end }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 70px;">Art.-Nr.</th>
+                <th>Artikelbezeichnung</th>
+                <th class="text-right" style="width: 100px;">Bestand</th>
+                <th class="text-right" style="width: 100px;">Bestellt</th>
+                <th class="text-right" style="width: 100px;">Komm.</th>
+                <th class="text-right" style="width: 100px;">Mindest</th>
+                <th class="text-center" style="width: 60px;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ for item in Items }}
+            <tr {{ if item.UnterMindestmenge }}class="warning-row"{{ end }}>
+                <td>{{ item.ArtikelNr }}</td>
+                <td>{{ item.Artikelbez }}</td>
+                <td class="text-right">{{ item.BestandAktuellFormatted }}</td>
+                <td class="text-right">{{ item.InBestellungFormatted }}</td>
+                <td class="text-right">{{ item.KommissioniertFormatted }}</td>
+                <td class="text-right">{{ item.MindestmengeFormatted }}</td>
+                <td class="text-center">
+                    {{ if item.UnterMindestmenge }}
+                        <span class="warning-indicator">⚠</span>
+                    {{ else }}
+                        ✓
+                    {{ end }}
+                </td>
+            </tr>
+
+            {{ if item.ChargenListe }}
+            <tr>
+                <td colspan="7" style="padding: 0; border-bottom: none;">
+                    <table class="charge-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"></th>
+                                <th style="width: 35%;">Chargen-Nr.</th>
+                                <th class="text-center" style="width: 25%;">MHD</th>
+                                <th class="text-center" style="width: 20%;">Stellplatz</th>
+                                <th class="text-right" style="width: 20%;">Bestand</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ for charge in item.ChargenListe }}
+                            <tr>
+                                <td></td>
+                                <td>{{ charge.ChargenNr }}</td>
+                                <td class="text-center">
+                                    {{ if charge.MHD }}
+                                        {{ charge.MHD | date.to_string "%d.%m.%y" }}
+                                    {{ else }}
+                                        -
+                                    {{ end }}
+                                </td>
+                                <td class="text-center">{{ charge.LagerStellplatzID }}</td>
+                                <td class="text-right">{{ charge.BestandFormatted }}</td>
+                            </tr>
+                            {{ end }}
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            {{ end }}
+            {{ end }}
+        </tbody>
+    </table>
+</body>
+</html>

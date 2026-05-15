@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lagerbestand - Hemme Milch (Preview)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #333;
+            padding: 15mm;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #2c5f2d;
+            padding-bottom: 15px;
+        }
+
+        .logo-container {
+            width: 150px;
+        }
+
+        .logo {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .report-info {
+            text-align: right;
+        }
+
+        .report-title {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #2c5f2d;
+            margin-bottom: 5px;
+        }
+
+        .report-date {
+            font-size: 9pt;
+            color: #666;
+        }
+
+        .report-details {
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2c5f2d;
+            font-size: 9pt;
+        }
+
+        .report-details p {
+            margin: 3px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 9pt;
+        }
+
+        thead {
+            background-color: #2c5f2d;
+            color: white;
+        }
+
+        th {
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+
+        td {
+            padding: 6px 6px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .warning-row {
+            background-color: #fff3cd !important;
+            border-left: 3px solid #ff9800;
+        }
+
+        .warning-indicator {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .charge-table {
+            margin-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-size: 8pt;
+            background-color: #f8f8f8;
+        }
+
+        .charge-table th {
+            background-color: #4a7c4b;
+            font-size: 8pt;
+            padding: 5px 4px;
+        }
+
+        .charge-table td {
+            padding: 4px 4px;
+            font-size: 8pt;
+        }
+
+        .summary {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border: 1px solid #2c5f2d;
+            border-radius: 4px;
+        }
+
+        .summary h3 {
+            color: #2c5f2d;
+            margin-bottom: 10px;
+            font-size: 11pt;
+        }
+
+        .summary-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .summary-stat {
+            flex: 1;
+        }
+
+        .summary-stat .value {
+            font-size: 16pt;
+            font-weight: bold;
+            color: #2c5f2d;
+        }
+
+        .summary-stat .label {
+            font-size: 9pt;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 8pt;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <div style="background-color: #2c5f2d; color: white; padding: 20px; text-align: center; font-size: 18pt; font-weight: bold;">
+                HEMME<br>MILCH
+            </div>
+        </div>
+        <div class="report-info">
+            <div class="report-title">Lagerbestand</div>
+            <div class="report-date">
+                Buchungsdatum: 14.01.2025<br>
+                Erstellt am: 14.05.2026 15:30 Uhr
+            </div>
+        </div>
+    </div>
+
+    <div class="report-details">
+        <p><strong>Lager-ID:</strong> 1</p>
+        <p><strong>Lagerstatus:</strong> 1</p>
+        <p><strong>Lagerart:</strong> Warenlager</p>
+        <p><strong>Mindestbestand (Filter):</strong> 100.000</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 60px;">Art.-Nr.</th>
+                <th>Artikelbezeichnung</th>
+                <th class="text-right" style="width: 80px;">Bestand</th>
+                <th class="text-right" style="width: 80px;">Bestellt</th>
+                <th class="text-right" style="width: 80px;">Komm.</th>
+                <th class="text-right" style="width: 80px;">Mindest</th>
+                <th class="text-center" style="width: 90px;">Letzte Lief.</th>
+                <th class="text-center" style="width: 50px;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1001</td>
+                <td>Vollmilch 3,8% Fett 1L</td>
+                <td class="text-right">450.500</td>
+                <td class="text-right">200.000</td>
+                <td class="text-right">50.000</td>
+                <td class="text-right">300.000</td>
+                <td class="text-center">10.01.2025</td>
+                <td class="text-center">✓</td>
+            </tr>
+            <tr>
+                <td colspan="8" style="padding: 0; border-bottom: none;">
+                    <table class="charge-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"></th>
+                                <th>Chargen-Nr.</th>
+                                <th class="text-center" style="width: 90px;">MHD</th>
+                                <th class="text-center" style="width: 80px;">Stellplatz</th>
+                                <th class="text-right" style="width: 80px;">Bestand</th>
+                                <th class="text-center" style="width: 90px;">Letzte Bew.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>CH20250110-001</td>
+                                <td class="text-center">25.01.2025</td>
+                                <td class="text-center">12</td>
+                                <td class="text-right">250.500</td>
+                                <td class="text-center">13.01.2025</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>CH20250108-002</td>
+                                <td class="text-center">23.01.2025</td>
+                                <td class="text-center">13</td>
+                                <td class="text-right">200.000</td>
+                                <td class="text-center">12.01.2025</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="warning-row">
+                <td>1002</td>
+                <td>Fettarme Milch 1,5% Fett 1L</td>
+                <td class="text-right">85.000</td>
+                <td class="text-right">500.000</td>
+                <td class="text-right">15.000</td>
+                <td class="text-right">100.000</td>
+                <td class="text-center">09.01.2025</td>
+                <td class="text-center"><span class="warning-indicator">⚠</span></td>
+            </tr>
+            <tr>
+                <td colspan="8" style="padding: 0; border-bottom: none;">
+                    <table class="charge-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30px;"></th>
+                                <th>Chargen-Nr.</th>
+                                <th class="text-center" style="width: 90px;">MHD</th>
+                                <th class="text-center" style="width: 80px;">Stellplatz</th>
+                                <th class="text-right" style="width: 80px;">Bestand</th>
+                                <th class="text-center" style="width: 90px;">Letzte Bew.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td>CH20250109-003</td>
+                                <td class="text-center">24.01.2025</td>
+                                <td class="text-center">14</td>
+                                <td class="text-right">85.000</td>
+                                <td class="text-center">13.01.2025</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>2001</td>
+                <td>Naturjoghurt 500g</td>
+                <td class="text-right">320.000</td>
+                <td class="text-right">0.000</td>
+                <td class="text-right">80.000</td>
+                <td class="text-right">150.000</td>
+                <td class="text-center">11.01.2025</td>
+                <td class="text-center">✓</td>
+            </tr>
+
+            <tr class="warning-row">
+                <td>3001</td>
+                <td>Butter 250g</td>
+                <td class="text-right">55.000</td>
+                <td class="text-right">150.000</td>
+                <td class="text-right">10.000</td>
+                <td class="text-right">80.000</td>
+                <td class="text-center">08.01.2025</td>
+                <td class="text-center"><span class="warning-indicator">⚠</span></td>
+            </tr>
+
+            <tr>
+                <td>4001</td>
+                <td>Käse Gouda mittelalt 200g</td>
+                <td class="text-right">180.000</td>
+                <td class="text-right">100.000</td>
+                <td class="text-right">20.000</td>
+                <td class="text-right">120.000</td>
+                <td class="text-center">12.01.2025</td>
+                <td class="text-center">✓</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="summary">
+        <h3>Zusammenfassung</h3>
+        <div class="summary-stats">
+            <div class="summary-stat">
+                <div class="value">5</div>
+                <div class="label">Artikel gesamt</div>
+            </div>
+            <div class="summary-stat">
+                <div class="value">2</div>
+                <div class="label">Unter Mindestbestand</div>
+            </div>
+            <div class="summary-stat">
+                <div class="value">1090.5</div>
+                <div class="label">Gesamtbestand (Einheiten)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Hemme Milch GmbH • Lagerbestandsbericht • Automatisch generiert</p>
+        <p>Dieser Bericht dient nur zu Informationszwecken und ist ohne Unterschrift gültig.</p>
+    </div>
+</body>
+</html>

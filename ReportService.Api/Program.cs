@@ -22,6 +22,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSingleton<ITenantService, TenantService>();
 builder.Services.AddSingleton<ITemplateService, ScribanTemplateService>();
 builder.Services.AddSingleton<IPdfService, PuppeteerPdfService>();
+builder.Services.AddSingleton<IPdfPostProcessingService, PdfPostProcessingService>();
 
 var app = builder.Build();
 

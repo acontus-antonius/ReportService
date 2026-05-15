@@ -19,11 +19,20 @@ public class ScribanTemplateService : ITemplateService
 
     public async Task<string> RenderTemplateAsync(string templateName, object model, TenantConfiguration tenant)
     {
+        // Map template names to specific HTML files
+        var templateFileName = templateName switch
+        {
+            "employee-purchase" => "EmployeePurchase.html",
+            "hemme-milch" => "HemmeInvoice.html",
+            "hemme-lagerbestand" => "Lagerbestand.html",
+            _ => "Invoice.html" // Fallback for any other templates
+        };
+
         var templatePath = Path.Combine(
             _environment.ContentRootPath,
             "Templates",
             templateName,
-            "Invoice.html");
+            templateFileName);
 
         if (!File.Exists(templatePath))
         {
@@ -41,10 +50,11 @@ public class ScribanTemplateService : ITemplateService
             tenant.TenantId.ToLower(),
             tenant.LogoFileName);
 
+        string logoBase64 = string.Empty;
         if (File.Exists(logoPath))
         {
             var logoBytes = await File.ReadAllBytesAsync(logoPath);
-            var logoBase64 = Convert.ToBase64String(logoBytes);
+            logoBase64 = Convert.ToBase64String(logoBytes);
 
             // Replace various logo references
             templateContent = templateContent
@@ -73,6 +83,9 @@ public class ScribanTemplateService : ITemplateService
 
         // Import tenant configuration
         scriptObject["Tenant"] = tenant;
+
+        // Make logo available as base64 for templates
+        scriptObject["logo_base64"] = logoBase64;
 
         // Register custom format functions
         ScribanFormatFunctions.Register(scriptObject);

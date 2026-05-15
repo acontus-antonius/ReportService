@@ -9,11 +9,13 @@ namespace ReportService.Api.Controllers;
 public class ReportsController : ControllerBase
 {
     private readonly IPdfService _pdfService;
+    private readonly IPdfPostProcessingService _pdfPostProcessingService;
     private readonly ILogger<ReportsController> _logger;
 
-    public ReportsController(IPdfService pdfService, ILogger<ReportsController> logger)
+    public ReportsController(IPdfService pdfService, IPdfPostProcessingService pdfPostProcessingService, ILogger<ReportsController> logger)
     {
         _pdfService = pdfService;
+        _pdfPostProcessingService = pdfPostProcessingService;
         _logger = logger;
     }
 
@@ -82,6 +84,42 @@ public class ReportsController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error generating Hemme invoice");
+            return StatusCode(500, "Error generating PDF report");
+        }
+    }
+
+    [HttpPost("hemme-lagerbestand")]
+    public async Task<IActionResult> GenerateHemmeLagerbestand(
+        [FromBody] LagerbestandRequest request)
+    {
+        try
+        {
+            _logger.LogInformation("Generating Hemme Lagerbestand report for Lager {LagerID} (Tenant: {TenantId})",
+                request.LagerID, request.TenantId);
+
+            // Generate base PDF with Puppeteer
+            var pdfData = await _pdfService.GeneratePdfFromTemplateAsync(
+                "hemme-lagerbestand",
+                request,
+                request.TenantId);
+
+            // Calculate summary statistics
+            int unterMindestbestand = request.Items.Count(i => i.UnterMindestmenge);
+            decimal gesamtBestand = (decimal)request.Items.Sum(i => i.BestandAktuell);
+
+            // Add summary box and footer with PdfSharp
+            pdfData = _pdfPostProcessingService.AddSummaryAndFooter(
+                pdfData,
+                request,
+                unterMindestbestand,
+                gesamtBestand);
+
+            return File(pdfData, "application/pdf",
+                $"Lagerbestand_{request.LagerID}_{DateTime.Now:yyyyMMdd}.pdf");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error generating Hemme Lagerbestand report");
             return StatusCode(500, "Error generating PDF report");
         }
     }

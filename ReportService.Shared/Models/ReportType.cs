@@ -7,5 +7,6 @@ public enum ReportType
     EmployeeWithdrawal,
     DeliveryNote,
     CreditNote,
-    MonthlyStatement
+    MonthlyStatement,
+    HemmeLagerbestand
 }
