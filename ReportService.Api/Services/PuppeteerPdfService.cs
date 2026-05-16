@@ -141,17 +141,28 @@ public class PuppeteerPdfService : IPdfService
     {
         if (_browser != null) return;
 
-        _logger.LogInformation("Downloading Chromium browser...");
+        var chromiumExecutablePath = _configuration["Puppeteer:ExecutablePath"]
+            ?? Environment.GetEnvironmentVariable("PUPPETEER_EXECUTABLE_PATH");
 
-        var browserFetcher = new BrowserFetcher();
-        await browserFetcher.DownloadAsync();
+        if (string.IsNullOrWhiteSpace(chromiumExecutablePath))
+        {
+            _logger.LogInformation("Downloading Chromium browser...");
+
+            var browserFetcher = new BrowserFetcher();
+            await browserFetcher.DownloadAsync();
+        }
+        else
+        {
+            _logger.LogInformation("Using Chromium browser at {ExecutablePath}", chromiumExecutablePath);
+        }
 
         _logger.LogInformation("Launching browser...");
 
         _browser = await Puppeteer.LaunchAsync(new LaunchOptions
         {
             Headless = true,
-            Args = new[] { "--no-sandbox", "--disable-setuid-sandbox" }
+            ExecutablePath = chromiumExecutablePath,
+            Args = new[] { "--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage" }
         });
 
         _logger.LogInformation("Browser launched successfully");

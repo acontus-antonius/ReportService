@@ -1,0 +1,15 @@
+services:
+  reportservice-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "49594:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      Angular__BaseUrl: http://host.docker.internal:50946
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+      Puppeteer__ExecutablePath: /usr/bin/chromium
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
