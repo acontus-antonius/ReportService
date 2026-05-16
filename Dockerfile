@@ -8,6 +8,19 @@ RUN apt-get update \
         fontconfig \
         fonts-dejavu-core \
         fonts-liberation \
+    && if command -v chromium >/dev/null 2>&1; then \
+        chromium_path="$(command -v chromium)"; \
+        if [ "$chromium_path" != "/usr/bin/chromium" ]; then \
+            ln -sf "$chromium_path" /usr/bin/chromium; \
+        fi; \
+    elif command -v chromium-browser >/dev/null 2>&1; then \
+        ln -sf "$(command -v chromium-browser)" /usr/bin/chromium; \
+    elif [ -x /usr/lib/chromium/chromium ]; then \
+        ln -sf /usr/lib/chromium/chromium /usr/bin/chromium; \
+    else \
+        echo "Chromium executable was not found after installation" >&2; \
+        exit 1; \
+    fi \
     && rm -rf /var/lib/apt/lists/*
 
 ENV ASPNETCORE_URLS=http://+:8080 \
