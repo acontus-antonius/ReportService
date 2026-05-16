@@ -4,29 +4,24 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
-        chromium \
+        curl \
         fontconfig \
         fonts-dejavu-core \
         fonts-liberation \
-    && if command -v chromium >/dev/null 2>&1; then \
-        chromium_path="$(command -v chromium)"; \
-        if [ "$chromium_path" != "/usr/bin/chromium" ]; then \
-            ln -sf "$chromium_path" /usr/bin/chromium; \
-        fi; \
-    elif command -v chromium-browser >/dev/null 2>&1; then \
-        ln -sf "$(command -v chromium-browser)" /usr/bin/chromium; \
-    elif [ -x /usr/lib/chromium/chromium ]; then \
-        ln -sf /usr/lib/chromium/chromium /usr/bin/chromium; \
-    else \
-        echo "Chromium executable was not found after installation" >&2; \
-        exit 1; \
-    fi \
+        gnupg \
+    && install -m 0755 -d /etc/apt/keyrings \
+    && curl -fsSL https://dl.google.com/linux/linux_signing_key.pub \
+        | gpg --dearmor -o /etc/apt/keyrings/google-linux-signing-key.gpg \
+    && echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google-linux-signing-key.gpg] http://dl.google.com/linux/chrome/deb/ stable main" \
+        > /etc/apt/sources.list.d/google-chrome.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
 ENV ASPNETCORE_URLS=http://+:8080 \
     DOTNET_RUNNING_IN_CONTAINER=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium \
-    Puppeteer__ExecutablePath=/usr/bin/chromium
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome \
+    Puppeteer__ExecutablePath=/usr/bin/google-chrome
 
 EXPOSE 8080
 

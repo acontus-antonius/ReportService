@@ -9,7 +9,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:8080
       Angular__BaseUrl: http://host.docker.internal:50946
-      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
-      Puppeteer__ExecutablePath: /usr/bin/chromium
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
+      Puppeteer__ExecutablePath: /usr/bin/google-chrome
     extra_hosts:
       - "host.docker.internal:host-gateway"
