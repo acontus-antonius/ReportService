@@ -18,6 +18,9 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends google-chrome-stable \
     && rm -rf /var/lib/apt/lists/*
 
+COPY docker/fonts/ /usr/local/share/fonts/truetype/custom/
+RUN fc-cache -f
+
 ENV ASPNETCORE_URLS=http://+:8080 \
     DOTNET_RUNNING_IN_CONTAINER=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome \
